@@ -6,6 +6,8 @@
 //Multiplicar o valor do frete para produtos entre 5kg até 25kg em 5x
 //Multiplicar o valor do frete para produtos entre 25kg até 75kg em 3x
 
+using System;
+
 namespace CalcularFrete
 {
     internal class Program
@@ -15,21 +17,26 @@ namespace CalcularFrete
             Console.WriteLine("Qual a distância que o produto percorrerá (em KM):");
             int distancia = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("Informe o peso do produto:");
+            Console.WriteLine("Informe o peso do produto (em kg):");
             int peso = Convert.ToInt32(Console.ReadLine());
 
-            double valorFrete = distancia * 0.10;
-            double freteAdicional = (distancia / 200) * 1;
-            freteAdicional *= 1 + (distancia / 1000);
+            double valorFrete = CalcularFrete(distancia, peso);
 
-            valorFrete += freteAdicional;
+            Console.WriteLine($"O valor do frete para a distância de {distancia} km é de R$ {valorFrete:F2}.");
+        }
+
+        public static double CalcularFrete(int distancia, int peso)
+        {
+            double valorFrete = distancia * 0.10;
+            valorFrete += (distancia / 200) * 1.00;
+            valorFrete += (distancia / 1000) * 10.00;
 
             if (peso >= 5 && peso <= 25)
                 valorFrete *= 5;
             else if (peso > 25 && peso <= 75)
                 valorFrete *= 3;
 
-            Console.WriteLine($"o valor do frete para a distância de {distancia} é de {valorFrete}");
+            return valorFrete;
         }
     }
 }
